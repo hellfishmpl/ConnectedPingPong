@@ -8,6 +8,8 @@
 
 const char* ssid = "a wifi";
 const char* password = "a password";
+const char* mqtt_server = "mqtt broker";
+const char* mqtt_prefix = "i77PPSB";
 const bool wifi = true; // set to FALSE to diseable all network ( for localtesting ).
 const bool debug = true; // set to true to serial output debug info.
 const bool screenIsPresent = false;  // set to true if you will use a screen ( SSD1306 )
@@ -15,7 +17,6 @@ const bool screenIsPresent = false;  // set to true if you will use a screen ( S
 //TODO : make some magic about WIFI connetion.
 //TODO : make authentication within MQTT
 
-const char* mqtt_server = "mqtt broker";
 WiFiClient espClient;
 PubSubClient client(espClient);
 long lastMsg = 0;
@@ -43,7 +44,7 @@ long DebounceTime[4]; //, time allows for Debounce
 
 // MQTT setting
 String myName = String(ESP.getChipId());
-String clientId = "i77PPSB" + myName;
+String clientId = myName;
 String P1Queue = "/PP/games/" + clientId + "/current/p1/currentscore";
 String P2Queue = "/PP/games/" + clientId + "/current/p2/currentscore";
 
@@ -209,9 +210,9 @@ void setup(void) {
       Serial.println(WiFi.localIP());
     }
     if (screenIsPresent) drawProgressBar(55);
-    if (MDNS.begin("test-device")) {
+    if (MDNS.begin("FHIOT")) {
       Serial.println("MDNS responder started");
-    }
+  }
 
     //OTA STUFF
     ArduinoOTA.setHostname(clientId.c_str());
