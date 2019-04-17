@@ -3,8 +3,8 @@
 #include <WiFiClient.h>
 #include <ESP8266mDNS.h>
 #include <ArduinoOTA.h>
-#include "SSD1306Brzo.h"
-#include "images.h"
+#include <SSD1306Brzo.h>
+#include <images.h>
 
 const char* ssid = "a wifi";
 const char* password = "a password";
@@ -210,7 +210,7 @@ void setup(void) {
       Serial.println(WiFi.localIP());
     }
     if (screenIsPresent) drawProgressBar(55);
-    if (MDNS.begin("FHIOT")) {
+    if (MDNS.begin(clientId)) {
       Serial.println("MDNS responder started");
   }
 
